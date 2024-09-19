@@ -15,5 +15,7 @@ Circles
 key and door system
 color 
 
-
+WASD for movement, move mouse to look around or use the arrow keys.
+scroll wheel or Q key to select a key from the key ring
+E to use key on door.
 Made with love and suffering, by Zach Beaupre.
