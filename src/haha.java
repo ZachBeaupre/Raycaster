@@ -19,6 +19,7 @@ public class haha extends JFrame {
         setSize(width, height);
         //ImageIcon img = new ImageIcon("C:\\Users\\Zach\\Desktop\\raycaster-20230526T192747Z-001\\raycaster\\src\\keys\\goldkey.png\\");
         //super.setIconImage(img.getImage());
+        //fuck fuck fuck fuck fuck fuck fuck fuck fuck fuck fuck fuck fuck fuck fuck fuck fuck fuck fuck fuck fuck fuck fuck fuck fuck fuck fuck fuck fuck fuck fuck fuck fuck fuck fuck fuck fuck fuck fuck fuck fuck fuck fuck fuck fuck fuck fuck fuck fuck fuck fuck fuck fuck fuck fuck fuck fuck fuck fuck fuck fuck fuck fuck fuck fuck fuck fuck fuck fuck fuck fuck fuck fuck fuck fuck fuck fuck fuck fuck fuck fuck fuck fuck fuck  shit shit shit shit shit shit shit shit shit shit shit shit shit shit shit shit shit shit shit shit shit shit shit shit shit shit shit shit shit shit shit shit shit shit shit shit shit shit shit shit shit shit shit shit shit shit shit shit shit shit shit shit shit shit shit shit 
 
         setVisible(true);
 
