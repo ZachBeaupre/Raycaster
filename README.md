@@ -1,4 +1,5 @@
 a little passion project
+basically a glorified tech demo
 just something i made for a school project by myself, and then after turning it in continued to work on it and add features. 
 
 i just wanted to put it here to show it off, and maybe even have people play it. 
