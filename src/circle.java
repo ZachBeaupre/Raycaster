@@ -76,7 +76,7 @@ public static Point2D.Double pointIntersectCircle(Line2D.Double L, circle c, boo
     //for some reason the omni calculator gave me a conversion equation that equals ax + by + c = 0 or ax + by = -c
     //i need it to equal ax + by - c = 0 or ax + by = c for my equation, but i never caught that
     //Observations : Circle is much more like a circle and less like a parabola that you are inside of all the time
-    //unfortunately the circles are translated by thier radius or diameter or something -_-
+    //unfortunately the circles are translated by their radius or diameter or something -_-
     double C1 = c.getGeom().getX()+c.getRadius();
     double C2 = c.getGeom().getY()+c.getRadius();
     double R2 = Math.pow(c.getRadius(), 2);
@@ -90,7 +90,7 @@ Point2D.Double start = new Point2D.Double(X1+C1, Y1+C2);
     double A = Y2 - Y1;
     double B = X1 - X2;
     double C = -1 * (Y1 * (X2 - X1) - A * X1);
-    //double C = -1 * (Y1 * (X2 - X1) - (Y2 - Y1) * X1);
+    //double C = -1 * (Y1 * (X2 - X1) - (Y2 - Y1) * X1); //golly gee willikers one less calculation
     double AC = A * C;
     double BC = B * C;
     double A2B2 = Math.pow(A, 2) + Math.pow(B, 2);
