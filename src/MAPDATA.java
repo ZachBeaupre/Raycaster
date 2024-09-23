@@ -54,8 +54,8 @@ if(SVG.contains("width") && SVG.contains("height")) {
                 while (SVG.charAt(lastPosition) != '"') {
 
                     //lastPosition = SVG.indexOf("polyline points=\"",lastPosition);
-                    x1.add(x2.getLast());
-                    y1.add(y2.getLast());
+                    x1.add(x2.get(x2.size()-1));
+                    y1.add(y2.get(y2.size()-1)); //fucking asshole ide said that changing it to .getLast() would be better but in fact wont work as a jar file when not on my comptuer maybe due to different java versions or something anyways fuck you intellij
                     x2.add(Double.parseDouble(SVG.substring(SVG.indexOf(" ", lastPosition) + 1, SVG.indexOf(",", SVG.indexOf(" ", lastPosition) + 1))) / scaleFactor); //apply transformations
                     lastPosition = SVG.indexOf(",", SVG.indexOf(" ", lastPosition) + 1);
                     y2.add(Double.parseDouble(SVG.substring(SVG.indexOf(",", lastPosition) + 1, Math.min(SVG.indexOf(" ", SVG.indexOf(",", lastPosition) + 1), SVG.indexOf("\"", SVG.indexOf(",", lastPosition) + 1)))) / scaleFactor);
