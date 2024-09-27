@@ -14,16 +14,19 @@ public class DrawPane extends JPanel {
 public static boolean portal = false;
     Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
     int width = (int)screenSize.getWidth();
-
     int height = (int)screenSize.getHeight();
 
     public boolean imagesallowed = false;
    double screen = width;
    //double screen = 1800;
+    double lastFrame = 0;
     double RIZZOLUTION =screen; //makes the room feel HUGE also makes it slower
 
     double strch = RIZZOLUTION/screen;
-    double riztodeg = RIZZOLUTION/90;
+    public double fov   = 90;
+    public double hfov  = fov/2;
+    public double hrfov = Math.toRadians(fov/2);
+    double riztodeg = RIZZOLUTION/fov;
     Image virtualMem;
     double abcd = 0;
     Graphics g;
@@ -51,8 +54,8 @@ public static boolean portal = false;
     int[] dcolor = new int[(int)RIZZOLUTION+1];
     int[] blank = new int[(int)RIZZOLUTION+1];
     Line2D.Double[] rayst = new Line2D.Double[0];
-    public double speed_desired =5;
-    public double speed =0.08;
+    public double speed_desired =7;
+    public double speed;
     public double snap = 1;
     public double col = snap+speed;
     public boolean usescollision = true;
@@ -237,6 +240,8 @@ public static boolean portal = false;
 
     }
     public void movelis() {
+        double timeSince = ((double)System.currentTimeMillis()/1000) / (lastFrame/1000);
+        speed = (speed_desired/timeSince)/100;
         Point2D plast = new Point2D.Double(player.getPos().getX(), player.getPos().getY());
         Point2D pnext = new Point2D.Double(player.getPos().getX(), player.getPos().getY());
         if (wkey) {
@@ -315,6 +320,7 @@ public static boolean portal = false;
         }
 
         repaint(0,0,(int)screen,900);
+
     }
 
     public void paint(Graphics g) {
@@ -427,10 +433,11 @@ public static boolean portal = false;
                 lowdists = clamp(lowdists,0,70);
             }
 
-            mP.draw(new Line2D.Double(pla_X,pla_Y,pla_X+lowdists*Math.sin(pla_D-toRad(45)+toRad(j/riztodeg)),pla_Y+lowdists*Math.cos(pla_D-toRad(45)+toRad(j/riztodeg))));
+            mP.draw(new Line2D.Double(pla_X,pla_Y,pla_X+lowdists*Math.sin(pla_D-hrfov+toRad(j/riztodeg)),pla_Y+lowdists*Math.cos(pla_D-hrfov+toRad(j/riztodeg))));
         }
         //mP.fill3DRect((int)player.getPos().getX(),(int)player.getPos().getY(),100,100 ,true);
 
+        lastFrame = System.currentTimeMillis();
 
     }
     //KEYWORDS
@@ -439,36 +446,37 @@ public static boolean portal = false;
     //DRAWWALLS
     //WALLS
     //try replacing 2000 with the rizzolution or screen or something
-    //or 400 with height/2
+    //or 400 with 2000/2
     public void drawlvlgeom(Graphics2D g){
+        //lastFrame = System.currentTimeMillis();
         new player(player.getPos().getX(),player.getPos().getY(),player.getDirection());
         if(strch<=1){
             for(int FS = 0; FS<=RIZZOLUTION;FS++){
 
-                double rayngle = ((player.getDirection() - toRad(45)) + toRad(FS / riztodeg));
-                int colored = clamp((int) Math.ceil((2000/(dists[FS] + 1))), 0, 240);
-               int coloredcirc = clamp((int) Math.ceil((2000 / (circdists[FS] + 1))), 0, 240);
+                double rayngle = ((player.getDirection() - hrfov) + toRad(FS / riztodeg));
                 double fsh = Math.pow(Math.cos(rayngle - player.getDirection()), fishEyeToggler); //fish without the eye
+                int colored = clamp((int) Math.ceil((2000 / (dists[FS] * fsh))), 0, 240);
+               int coloredcirc = clamp((int) Math.ceil((2000 / (circdists[FS] * fsh))), 0, 240);
                 if(dists[FS]!=123456789) {
                     g.setColor(new Color(colored, colored, 0));
 
-                    g.draw(new Line2D.Double(FS * strch, 2000 / ((dists[FS]) * fsh) + 400, FS * strch, 2000 / ((-dists[FS]) * fsh) + 400));
+                    g.draw(new Line2D.Double(FS * strch, 2000 / (dists[FS] * fsh) + 400, FS * strch, 2000 / ((-dists[FS]) * fsh) + 400));
                 }
                 if(circdists[FS]!=123456789){
                     g.setColor(new Color(coloredcirc,coloredcirc,0));
 
-                    g.draw(new Line2D.Double(FS * strch, 2000 / ((circdists[FS]) * fsh) + 400, FS * strch, (2000 / ((-circdists[FS]) * fsh)) + 400));
+                    g.draw(new Line2D.Double(FS * strch, 2000 / (circdists[FS] * fsh) + 400, FS * strch, (2000 / ((-circdists[FS]) * fsh)) + 400));
                 }
                 if(keydists[FS]!=123456789) {
                     g.setColor(new Color(0, 0, colored));
 
-                    g.draw(new Line2D.Double(FS * strch, 2000 / ((keydists[FS]) * fsh) + 400, FS * strch, (2000 / ((-keydists[FS]) * fsh)) + 400));
+                    g.draw(new Line2D.Double(FS * strch, 2000 / (keydists[FS] * fsh) + 400, FS * strch, (2000 / ((-keydists[FS]) * fsh)) + 400));
                 }
                 if(boxdists[FS]!=123456789) {
                     g.setColor(new Color(0, colored, colored));
 
 
-                    g.draw(new Line2D.Double(FS * strch, 2000 / ((boxdists[FS]) * fsh) + 400, FS * strch, (2000 / ((-boxdists[FS]) * fsh)) + 400));
+                    g.draw(new Line2D.Double(FS * strch, 2000 / (boxdists[FS] * fsh) + 400, FS * strch, (2000 / ((-boxdists[FS]) * fsh)) + 400));
                 }
 
             }
@@ -476,14 +484,14 @@ public static boolean portal = false;
         }else{
             for(int FS = 0; FS<=RIZZOLUTION;FS++){
 
-                double rayngle = ((player.getDirection() - toRad(45)) + toRad(FS / riztodeg));
-                int colored = clamp((int) Math.ceil((2000 / ((dists[FS]) + 1))), 0, 200);
-                int coloredcirc = clamp((int) Math.ceil((2000 / (circdists[FS] + 1))), 0, 200);
+                double rayngle = ((player.getDirection() - hrfov) + toRad(FS / riztodeg));
                 double fsh = Math.pow(Math.cos(rayngle - player.getDirection()), fishEyeToggler); //fish without the eye
+                int colored = clamp((int) Math.ceil((2000 / (dists[FS] * fsh))), 0, 200);
+                int coloredcirc = clamp((int) Math.ceil((2000 / (circdists[FS] * fsh))), 0, 200);
                 for(int t =0; t<(int)strch+1;t++) {
                     if(dists[FS]!=123456789) {
                         g.setColor(new Color(colored, colored, 0));
-                        g.draw(new Line2D.Double(FS * strch + t, 2000 / ((dists[FS]) * fsh) + 400, (FS * strch) + t, 2000 / ((-dists[FS]) * fsh) + 400));
+                        g.draw(new Line2D.Double(FS * strch + t, 2000 / ((dists[FS]) * fsh) + 400, FS * strch + t, 2000 / ((-dists[FS]) * fsh) + 400));
                     }
                     if(circdists[FS]!=123456789) {
                         g.setColor(new Color(coloredcirc, coloredcirc,0));
@@ -494,7 +502,7 @@ public static boolean portal = false;
                     if(keydists[FS]!=123456789) {
                         g.setColor(new Color(0, 0, colored));
 
-                        g.draw(new Line2D.Double(FS * strch + t, 2000 / ((keydists[FS]) * fsh) + 400, FS * strch + t, 400 + (2000 / ((-keydists[FS]) * fsh))+400));
+                        g.draw(new Line2D.Double(FS * strch + t, 2000 / ((keydists[FS]) * fsh) + 400, FS * strch + t, (2000 / ((-keydists[FS]) * fsh))+400));
                     }
                     if(boxdists[FS]!=123456789) {
                         g.setColor(new Color(0, colored, colored));
@@ -602,13 +610,13 @@ public static boolean portal = false;
 
         // renderDistance = renderDistance * RIZZOLUTION;
         double rzn = 1/RIZZOLUTION;
-        double rad45 = toRad(45);
-        double p45 = (pla_D - rad45);
+
+        double p45 = (pla_D - hrfov);
 
         while (FS <= RIZZOLUTION) { //90 degrees
             int thatdoor =0;
 
-            double rayngle = ((pla_D - rad45) + toRad(S / riztodeg)); //900 --> 90
+            double rayngle = ((pla_D - hrfov) + toRad(S / riztodeg)); //900 --> 90
             double xStep = Math.sin(rayngle);
             double yStep =Math.cos(rayngle);
             Line2D.Double in = new Line2D.Double(new Point2D.Double(pla_X, pla_Y), new Point2D.Double(pla_X + renderDistance * xStep, pla_Y + renderDistance * yStep));

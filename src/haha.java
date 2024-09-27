@@ -10,7 +10,7 @@ public class haha extends JFrame {
     public haha() {
         super("RayKeyster");
 
-        // You can set the content pane of the frame to your custom class.
+        // set the content pane of the frame to the class.
         setContentPane(new DrawPane());
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         int width = (int)screenSize.getWidth();

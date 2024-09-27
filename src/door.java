@@ -6,22 +6,17 @@ import java.awt.geom.Point2D;
 public class door
 {
     // instance variables - replace the example below with your own
-    protected double x;
-    protected double y;
-    protected  Point2D pivot;
-    protected  double length;
+    protected double x, y, length, closeddir, dir, swingamt;
+    protected Point2D pivot;
     protected  boolean state;
-    protected  double closeddir;
-    protected  double dir;
     protected  int cr;
     protected  int cl;
     protected  int cb;
     protected  Line2D.Double mydoor;
-    protected  int code;
-    protected  int swing;
+    protected  int code, swing ;
+
     protected  final boolean CLOSED = false;
     protected static final boolean OPENED = true;
-    protected  double swingamt;
     public door(){
     }
     public door(double x,double y,double length, double dir,int swing, int code){
