@@ -20,4 +20,4 @@ scroll wheel or Q key to select a key from the key ring
 E to use key on door.
 Made with love and suffering, by Zach Beaupre.
 
-![image](https://github.com/user-attachments/assets/1d13cf20-2aa0-4aec-906c-1bf02c68812e)
+![image](img.png)
