@@ -66,6 +66,10 @@ public class circle {
     public static Point2D.Double pointIntersectCircle(Line2D.Double L, circle c) {
         return pointIntersectCircle(L, c, true);
     }
+    public void setCenter(double x, double y){
+        this.x = x;
+        this.y = y;
+    }
 
 
 public static Point2D.Double pointIntersectCircle(Line2D.Double L, circle c, boolean closestToLX1) {

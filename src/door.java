@@ -43,19 +43,20 @@ public class door
         int ff = 1;
         ff= ff * swing;
         if(this.code == code) {
-            if(state){
-                ff =-ff;
+            if (state) {
+                ff = -ff;
             }
 
 
+
                 dir += ff * Math.toRadians(swingamt);
+
                 mydoor = new Line2D.Double(x, y, x + length * Math.cos(dir), y + length * Math.sin(dir));
 
-
             state = !state;
-        }else{
-            mydoor =  new Line2D.Double(x, y, x+length*Math.cos(dir),y+length*Math.sin(dir));
+
         }
+        mydoor =  new Line2D.Double(x, y, x+length*Math.cos(dir),y+length*Math.sin(dir));
     }
     public void setLength(double length){
         this.length = length;

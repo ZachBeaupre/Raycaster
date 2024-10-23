@@ -25,8 +25,8 @@ public player(){
 
         // initialise instance variables
 
-        player.x =x;
-        player.y =y;
+        player.x   = x;
+        player.y   = y;
         player.dir = dir;
         //player.dir = toRad(dir);
 

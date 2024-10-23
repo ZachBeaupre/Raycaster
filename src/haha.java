@@ -8,7 +8,7 @@ public class haha extends JFrame {
     public static boolean dingus = true;
 
     public haha() {
-        super("RayKeyster");
+        super("RaycasterV5");
 
         // set the content pane of the frame to the class.
         setContentPane(new DrawPane());

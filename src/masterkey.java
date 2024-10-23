@@ -18,7 +18,7 @@ public class masterkey
     public masterkey(){
     }
     public void keycol(){
-        if(new Rectangle2D.Double(x-2.5,y-2.5,5.0,5.0).contains(player.getPos())&&!used){
+        if(new Rectangle2D.Double(x-4.0,y-4.0,8.0,8.0).contains(player.getPos())&&!used){
            if(grant == 14){
                 DrawPane.portal = true;
                used = true;
@@ -45,7 +45,7 @@ public class masterkey
             return new Line2D.Double(x + 2.5 * Math.cos(theta+halfPi), y + 2.5 * Math.sin(theta+halfPi), x - 2.5 * Math.cos(theta + halfPi) , y - 2.5 * Math.sin(theta + halfPi));
 //            return new Line2D.Double(x - 2.5, y - 2.5, x, y); //my old method of making the keys. Before 9/20/2024 I didnt know that the Math.atan2() functions parameters are ( y, x ) instead of ( x, y ). It is the stupidest thing ever and I hate it with every fibre and fiber of my being.
         }else{
-            return new Line2D.Double(1000,1000,1000,1000);
+            return new Line2D.Double(0,0,0,0);
         }
     }
 }

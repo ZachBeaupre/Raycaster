@@ -14,15 +14,18 @@ public class DrawPane extends JPanel {
 public static boolean portal = false;
     Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
     int width = (int)screenSize.getWidth();
+
+    double screen = width;
+
     int height = (int)screenSize.getHeight();
 
     public boolean imagesallowed = false;
-   double screen = width;
    //double screen = 1800;
     double lastFrame = 0;
     double RIZZOLUTION =screen; //makes the room feel HUGE also makes it slower
 
     double strch = RIZZOLUTION/screen;
+
     public double fov   = 90;
     public double hfov  = fov/2;
     public double hrfov = Math.toRadians(fov/2);
@@ -242,6 +245,8 @@ public static boolean portal = false;
     public void movelis() {
         double timeSince = ((double)System.currentTimeMillis()/1000) / (lastFrame/1000);
         speed = (speed_desired/timeSince)/100;
+        //circleG[0].setCenter(60 + 10 * Math.cos((double)System.currentTimeMillis()/1000), -21 + 10 * Math.sin((double)System.currentTimeMillis()/1000));
+
         Point2D plast = new Point2D.Double(player.getPos().getX(), player.getPos().getY());
         Point2D pnext = new Point2D.Double(player.getPos().getX(), player.getPos().getY());
         if (wkey) {
@@ -453,10 +458,10 @@ public static boolean portal = false;
         if(strch<=1){
             for(int FS = 0; FS<=RIZZOLUTION;FS++){
 
-                double rayngle = ((player.getDirection() - hrfov) + toRad(FS / riztodeg));
+                double rayngle = ((player.getDirection() - hrfov) + toRad(FS/riztodeg));
                 double fsh = Math.pow(Math.cos(rayngle - player.getDirection()), fishEyeToggler); //fish without the eye
-                int colored = clamp((int) Math.ceil((2000 / (dists[FS] * fsh))), 0, 240);
-               int coloredcirc = clamp((int) Math.ceil((2000 / (circdists[FS] * fsh))), 0, 240);
+                int colored = clamp((int) Math.ceil((2000 / (dists[FS]))), 0, 255);
+               int coloredcirc = clamp((int) Math.ceil((2000 / (circdists[FS]))), 0, 255);
                 if(dists[FS]!=123456789) {
                     g.setColor(new Color(colored, colored, 0));
 
@@ -599,14 +604,15 @@ public static boolean portal = false;
         //if ((isrendering = true)) {
         // g.dispose();
         //new player(player.getPos().getX(),player.getPos().getY(),player.getDirection());
-        double S = 0;
+
         boolean happening = false;
         int FS = 0;
         double renderDistance = 5000;
         double pla_X = player.getPos().getX();
         double pla_Y = player.getPos().getY();
         double pla_D = player.getDirection();
-        Point2D getPos = player.getPos();
+        Point2D.Double getPos = (Point2D.Double) player.getPos();
+
 
         // renderDistance = renderDistance * RIZZOLUTION;
         double rzn = 1/RIZZOLUTION;
@@ -615,18 +621,17 @@ public static boolean portal = false;
 
         while (FS <= RIZZOLUTION) { //90 degrees
             int thatdoor =0;
-
-            double rayngle = ((pla_D - hrfov) + toRad(S / riztodeg)); //900 --> 90
+            double rayngle = ((pla_D - hrfov) + toRad(FS / riztodeg)); //900 --> 90
             double xStep = Math.sin(rayngle);
             double yStep =Math.cos(rayngle);
             Line2D.Double in = new Line2D.Double(new Point2D.Double(pla_X, pla_Y), new Point2D.Double(pla_X + renderDistance * xStep, pla_Y + renderDistance * yStep));
-
             double lowestnew = 100000;
 
             for (int j = 0; j < mapthing.length; j++) {
                 if (in.intersectsLine(mapthing[j])) {
 
-                    double len = getPos.distance(pointIntersect(in,mapthing[j]));
+
+                   double len = getPos.distance(pointIntersect(in,mapthing[j]));
 
                     if(lowestnew>=len){
                         dists[FS] = len;
@@ -668,7 +673,7 @@ public static boolean portal = false;
                     if(FS ==RIZZOLUTION/2) {
                         thisdoor = j;
                         thatdoor = thisdoor;
-                        if (usekey == true &&(boxdists[FS]<dists[FS])){
+                        if (usekey &&(boxdists[FS]<dists[FS])){
                             happening = true;
                         }
                     }
@@ -694,7 +699,8 @@ public static boolean portal = false;
             }
 
             if(keydists[FS]==0){keydists[FS]=123456789;}
-            S += 1;
+
+
             FS += 1;
 
         }
@@ -722,10 +728,10 @@ public static boolean portal = false;
 
         }
         getKeyListeners();
-        this.dists = dists;
+        this.dists    = dists;
         this.boxdists = boxdists;
-        this.keydists =keydists;
-        this.circdists = circdists;
+        this.keydists = keydists;
+        this.circdists= circdists;
 
 
 
