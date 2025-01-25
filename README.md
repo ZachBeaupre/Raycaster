@@ -1,3 +1,5 @@
+![image](img.png)
+
 a little passion project
 basically a glorified tech demo
 just something i made for a school project by myself, and then after turning it in continued to work on it and add features. 
@@ -22,4 +24,4 @@ E to use key on door.
 
 Made with love and suffering, by Zach Beaupre.
 
-![image](img.png)
+
